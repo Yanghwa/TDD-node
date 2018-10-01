@@ -14,8 +14,6 @@ const index = (req, res) =>{
         }).then(users => {
             res.json(users);
         });
-    //res.json(users.slice(0, limit));
-    // res.send('users list\n');
 };
 
 const show = (req, res) => {
@@ -43,12 +41,18 @@ const destroy = (req, res) => {
 const create = (req, res) => {
     const name = req.body.name;
     if(!name) return res.status(400).end();
-    const isDuplicated = users.filter(user => user.name === name).length
-    if(isDuplicated) return res.status(409).end();
-    const id = Date.now();
-    const user = {id, name};
-    users.push(user);
-    res.status(201).json(user);
+
+    models.User.create({name}).then(user => {
+        res.status(201).json(user);
+    }).catch(err => {
+        if(err.name === 'SequelizeUniqueConstraintError') {
+            return res.status(409).end();
+        }
+        return res.status(500).end()
+    });
+    
+    // const isDuplicated = users.filter(user => user.name === name).length
+    // if(isDuplicated) return res.status(409).end();
 };
 
 const update = (req,res) => {

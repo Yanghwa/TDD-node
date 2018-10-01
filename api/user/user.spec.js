@@ -7,14 +7,15 @@ const app = require('../../');
 
 describe('GET /users is ', () => {
 
+    const users = [
+        { name: 'alice' },
+        { name: 'dan' },
+        { name: 'chris' }
+    ];
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
+
     describe('success', () => {
-        const users = [
-            { name: 'alice' },
-            { name: 'beck' },
-            { name: 'chris' }
-        ];
-        before(() => models.sequelize.sync({force:true}));
-        before(() => models.User.bulkCreate(users));
         it('user object response ', (done) => {
             request(app)
                 .get('/users')
@@ -44,6 +45,14 @@ describe('GET /users is ', () => {
 });
 
 describe('GET /users/:id ', () => {
+    const users = [
+        { name: 'alice' },
+        { name: 'dan' },
+        { name: 'chris' }
+    ];
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
+
     describe('success', () => {
         it('id is 1 user ', (done) => {
             request(app)
@@ -73,7 +82,15 @@ describe('GET /users/:id ', () => {
 
 });
 
-describe.only('DELETE /users/:id', () => {
+describe('DELETE /users/:id', () => {
+    const users = [
+        { name: 'alice' },
+        { name: 'dan' },
+        { name: 'chris' }
+    ];
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
+
     describe('success', () => {
         it('return 204', (done) => {
             request(app)
@@ -92,9 +109,17 @@ describe.only('DELETE /users/:id', () => {
     });
 });
 
-describe('POST /users', () => {
+describe.only('POST /users', () => {
+    const users = [
+        { name: 'alice' },
+        { name: 'dan' },
+        { name: 'chris' }
+    ];
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
+
     describe('success', () => {
-        let name = 'dan',
+        let name = 'beck',
             body;
         before(done => {
             request(app)
