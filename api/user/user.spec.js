@@ -1,12 +1,20 @@
 //test
 const request = require('supertest');
 const should = require('should');
+const models = require('../../models');
 
 const app = require('../../');
 
-describe('GET /users is ', () => {
+describe.only('GET /users is ', () => {
 
     describe('success', () => {
+        const users = [
+            { name: 'alice' },
+            { name: 'beck' },
+            { name: 'chris' }
+        ];
+        before(() => models.sequelize.sync({force:true}));
+        before(() => models.User.bulkCreate(users));
         it('user object response ', (done) => {
             request(app)
                 .get('/users')
