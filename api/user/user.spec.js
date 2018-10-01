@@ -109,7 +109,7 @@ describe('DELETE /users/:id', () => {
     });
 });
 
-describe.only('POST /users', () => {
+describe('POST /users', () => {
     const users = [
         { name: 'alice' },
         { name: 'dan' },
@@ -176,9 +176,17 @@ describe.only('POST /users', () => {
 });
 
 describe('PUT /users/:id', () => {
+    const users = [
+        { name: 'alice' },
+        { name: 'dan' },
+        { name: 'chris' }
+    ];
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
+
     describe('success', () => {
         it('changed name return', (done) => {
-            const name = "then";
+            const name = "dany";
             request(app)
                 .put('/users/3')
                 .send({name})
@@ -216,7 +224,7 @@ describe('PUT /users/:id', () => {
         it('duplicate name return 409', (done) => {
             request(app)
                 .put('/users/3')
-                .send({name: 'hey'})
+                .send({name: 'dan'})
                 .expect(409)
                 .end(done);
         });
