@@ -43,7 +43,7 @@ describe('GET /users is ', () => {
     });
 });
 
-describe.only('GET /users/:id ', () => {
+describe('GET /users/:id ', () => {
     describe('success', () => {
         it('id is 1 user ', (done) => {
             request(app)
@@ -73,7 +73,7 @@ describe.only('GET /users/:id ', () => {
 
 });
 
-describe('DELETE /users/:id', () => {
+describe.only('DELETE /users/:id', () => {
     describe('success', () => {
         it('return 204', (done) => {
             request(app)
