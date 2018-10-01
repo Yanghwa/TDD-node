@@ -5,7 +5,7 @@ const models = require('../../models');
 
 const app = require('../../');
 
-describe.only('GET /users is ', () => {
+describe('GET /users is ', () => {
 
     describe('success', () => {
         const users = [
@@ -43,7 +43,7 @@ describe.only('GET /users is ', () => {
     });
 });
 
-describe('GET /users/:id ', () => {
+describe.only('GET /users/:id ', () => {
     describe('success', () => {
         it('id is 1 user ', (done) => {
             request(app)
